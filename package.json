@@ -41,7 +41,7 @@
     "test": "jest test --coverage"
   },
   "dependencies": {
-    "conf": "^7.1.2",
+    "conf": "^13.0.1",
     "throttle-debounce": "^5.0.2"
   },
   "devDependencies": {
