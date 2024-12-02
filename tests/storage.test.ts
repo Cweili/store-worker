@@ -10,16 +10,16 @@ describe('Store', () => {
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should get item from store (sync)', () => {
+  test('should get item from store (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
-    store.destroy()
+    await store.destroy()
   })
 
   test('should set item in store', async () => {
@@ -28,16 +28,16 @@ describe('Store', () => {
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should set item in store (sync)', () => {
+  test('should set item in store (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
-    store.destroy()
+    await store.destroy()
   })
 
   test('should delete item from store', async () => {
@@ -47,17 +47,17 @@ describe('Store', () => {
     store.delete('key')
     expect(store.get('key')).toBeUndefined()
     expect(store.store).toEqual({})
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should delete item from store (sync)', () => {
+  test('should delete item from store (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key', 'value')
     store.delete('key')
     expect(store.get('key')).toBeUndefined()
     expect(store.store).toEqual({})
-    store.destroy()
+    await store.destroy()
   })
 
   test('should clear store', async () => {
@@ -67,17 +67,17 @@ describe('Store', () => {
     store.clear()
     expect(store.get('key')).toBeUndefined()
     expect(store.store).toEqual({})
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should clear store (sync)', () => {
+  test('should clear store (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key', 'value')
     store.clear()
     expect(store.get('key')).toBeUndefined()
     expect(store.store).toEqual({})
-    store.destroy()
+    await store.destroy()
   })
 
   test('should check if item exists in store', async () => {
@@ -89,10 +89,10 @@ describe('Store', () => {
     store.delete('key')
     expect(store.has('key')).toBe(false)
     expect(store.store).toEqual({})
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should check if item exists in store (sync)', () => {
+  test('should check if item exists in store (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key', 'value')
@@ -101,7 +101,7 @@ describe('Store', () => {
     store.delete('key')
     expect(store.has('key')).toBe(false)
     expect(store.store).toEqual({})
-    store.destroy()
+    await store.destroy()
   })
 
   test('should get store keys', async () => {
@@ -111,17 +111,17 @@ describe('Store', () => {
     store.set('key2', 'value2')
     expect(store.keys).toEqual(['key1', 'key2'])
     expect(store.store).toEqual({ key1: 'value1', key2: 'value2' })
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should get store keys (sync)', () => {
+  test('should get store keys (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key1', 'value1')
     store.set('key2', 'value2')
     expect(store.keys).toEqual(['key1', 'key2'])
     expect(store.store).toEqual({ key1: 'value1', key2: 'value2' })
-    store.destroy()
+    await store.destroy()
   })
 
   test('should get store values', async () => {
@@ -131,17 +131,17 @@ describe('Store', () => {
     store.set('key2', 'value2')
     expect(store.values).toEqual(['value1', 'value2'])
     expect(store.store).toEqual({ key1: 'value1', key2: 'value2' })
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should get store values (sync)', () => {
+  test('should get store values (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set('key1', 'value1')
     store.set('key2', 'value2')
     expect(store.values).toEqual(['value1', 'value2'])
     expect(store.store).toEqual({ key1: 'value1', key2: 'value2' })
-    store.destroy()
+    await store.destroy()
   })
 
   test('should set multiple items in store', async () => {
@@ -151,16 +151,16 @@ describe('Store', () => {
     expect(store.get('key1')).toBe('value1')
     expect(store.get('key2')).toBe('value2')
     expect(store.store).toEqual({ key1: 'value1', key2: 'value2' })
-    store.destroy()
+    await store.destroy()
   })
 
-  test('should set multiple items in store (sync)', () => {
+  test('should set multiple items in store (sync)', async () => {
     const store = getNewStore()
     store.initSync()
     store.set({ key1: 'value1', key2: 'value2' })
     expect(store.get('key1')).toBe('value1')
     expect(store.get('key2')).toBe('value2')
     expect(store.store).toEqual({ key1: 'value1', key2: 'value2' })
-    store.destroy()
+    await store.destroy()
   })
 })

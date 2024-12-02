@@ -30,27 +30,35 @@ export class Store<T extends Record<string, any> = Record<string, any>> {
 
   private id = 0
 
-  private saveThrottle: () => void
+  private terminated = false
+
+  private saveThrottle: throttle<() => void>
 
   constructor(options: Options<T>) {
     this.options = {
       saveThrottle: 10000,
       ...options
     }
-    this.saveThrottle = throttle(this.options.saveThrottle, () => {
+    this.saveThrottle = throttle(this.options.saveThrottle!, () => {
       this.save()
     })
-    this.createWorker(this.options)
+    this.createWorker()
   }
 
-  private createWorker(options: StoreOptions<T>) {
-    this.worker = (new Worker(pathResolve(__dirname, process.env.JEST_WORKER_ID ? '../dist' : '', 'worker.js'), { workerData: options }))
-      .on('error', () => {
-        this.createWorker(options)
-      })
-      .on('exit', () => {
-        this.createWorker(options)
-      })
+  private restartWorker = (handleError?: boolean) => (err) => {
+    if (handleError) console.error(err)
+    if (this.terminated) return
+    this.createWorker()
+  }
+
+  private createWorker() {
+    this.worker = (new Worker(
+      pathResolve(__dirname, process.env.JEST_WORKER_ID ? '../dist' : '', 'worker.js'),
+      { workerData: this.options },
+    ))
+      .on('error', this.restartWorker(true))
+      .on('exit', this.restartWorker())
+
     this.worker!.on('message', (resBuffer) => {
       const {
         id,
@@ -223,7 +231,10 @@ export class Store<T extends Record<string, any> = Record<string, any>> {
   /**
    * Destroy the store instance.
    */
-  destroy() {
-    this.worker!.terminate()
+  async destroy() {
+    this.saveThrottle.cancel()
+    await this.save()
+    this.terminated = true
+    return this.worker!.terminate()
   }
 }
