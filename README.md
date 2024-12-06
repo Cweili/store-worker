@@ -20,29 +20,37 @@ npm install store-worker
 ```
 
 ```js
-import Store from 'store-worker';
+import { createStore } from 'store-worker'
 ```
 
 ## Usage
 
 ```js
-const store = new Store({
+const store = await createStore({
   saveThrottle: 10000, // The number of milliseconds to wait before saving the store to disk after a change. This can help to reduce the number of disk writes when making frequent changes to the store.
-  ... // other serializable options are pass to Conf instance 
-});
+  ... // other serializable options are passed to Conf instance 
+})
 
 // Set a value
-store.set('unicorn', '🦄');
+store.set('unicorn', '🦄')
 
 // Get a value
-console.log(store.get('unicorn'));
+console.log(store.get('unicorn'))
 //=> '🦄'
 
 // Delete a value
-store.delete('unicorn');
+store.delete('unicorn')
 ```
 
-Serializable options are pass to [Conf](https://www.npmjs.com/package/conf).
+Serializable options are passed to [Conf](https://www.npmjs.com/package/conf).
+
+Synchronously create Store:
+
+```js
+import { createStoreSync } from 'store-worker'
+
+const store = createStoreSync(options)
+```
 
 [badge-version]: https://img.shields.io/npm/v/store-worker.svg
 [badge-downloads]: https://img.shields.io/npm/dt/store-worker.svg

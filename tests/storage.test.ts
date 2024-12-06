@@ -1,12 +1,15 @@
 import { describe, expect, test } from '@jest/globals'
-import Store from '../src'
+import {
+  createStore,
+  createStoreSync,
+} from '../src'
 
-const getNewStore = () => new Store({ configName: Date.now().toString(36) })
+const getNewStore = () => createStore({ configName: Date.now().toString(36) })
+const getNewStoreSync = () => createStoreSync({ configName: Date.now().toString(36) })
 
 describe('Store', () => {
   test('should get item from store', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
@@ -14,8 +17,7 @@ describe('Store', () => {
   })
 
   test('should get item from store (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
@@ -23,8 +25,7 @@ describe('Store', () => {
   })
 
   test('should set item in store', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
@@ -32,8 +33,7 @@ describe('Store', () => {
   })
 
   test('should set item in store (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key', 'value')
     expect(store.get('key')).toBe('value')
     expect(store.store).toEqual({ key: 'value' })
@@ -41,8 +41,7 @@ describe('Store', () => {
   })
 
   test('should delete item from store', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key', 'value')
     store.delete('key')
     expect(store.get('key')).toBeUndefined()
@@ -51,8 +50,7 @@ describe('Store', () => {
   })
 
   test('should delete item from store (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key', 'value')
     store.delete('key')
     expect(store.get('key')).toBeUndefined()
@@ -61,8 +59,7 @@ describe('Store', () => {
   })
 
   test('should clear store', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key', 'value')
     store.clear()
     expect(store.get('key')).toBeUndefined()
@@ -71,8 +68,7 @@ describe('Store', () => {
   })
 
   test('should clear store (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key', 'value')
     store.clear()
     expect(store.get('key')).toBeUndefined()
@@ -81,8 +77,7 @@ describe('Store', () => {
   })
 
   test('should check if item exists in store', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key', 'value')
     expect(store.has('key')).toBe(true)
     expect(store.store).toEqual({ key: 'value' })
@@ -93,8 +88,7 @@ describe('Store', () => {
   })
 
   test('should check if item exists in store (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key', 'value')
     expect(store.has('key')).toBe(true)
     expect(store.store).toEqual({ key: 'value' })
@@ -105,8 +99,7 @@ describe('Store', () => {
   })
 
   test('should get store keys', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key1', 'value1')
     store.set('key2', 'value2')
     expect(store.keys).toEqual(['key1', 'key2'])
@@ -115,8 +108,7 @@ describe('Store', () => {
   })
 
   test('should get store keys (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key1', 'value1')
     store.set('key2', 'value2')
     expect(store.keys).toEqual(['key1', 'key2'])
@@ -125,8 +117,7 @@ describe('Store', () => {
   })
 
   test('should get store values', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set('key1', 'value1')
     store.set('key2', 'value2')
     expect(store.values).toEqual(['value1', 'value2'])
@@ -135,8 +126,7 @@ describe('Store', () => {
   })
 
   test('should get store values (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set('key1', 'value1')
     store.set('key2', 'value2')
     expect(store.values).toEqual(['value1', 'value2'])
@@ -145,8 +135,7 @@ describe('Store', () => {
   })
 
   test('should set multiple items in store', async () => {
-    const store = getNewStore()
-    await store.init()
+    const store = await getNewStore()
     store.set({ key1: 'value1', key2: 'value2' })
     expect(store.get('key1')).toBe('value1')
     expect(store.get('key2')).toBe('value2')
@@ -155,8 +144,7 @@ describe('Store', () => {
   })
 
   test('should set multiple items in store (sync)', async () => {
-    const store = getNewStore()
-    store.initSync()
+    const store = getNewStoreSync()
     store.set({ key1: 'value1', key2: 'value2' })
     expect(store.get('key1')).toBe('value1')
     expect(store.get('key2')).toBe('value2')
