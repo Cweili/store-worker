@@ -1,6 +1,6 @@
 {
   "name": "store-worker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple and efficient way to manage persistent configuration in Node.js or Electron applications. It leverages worker threads to handle storage operations, ensuring that your main process remains responsive.",
   "keywords": [
     "config",
