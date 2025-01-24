@@ -7,6 +7,7 @@ import { SyncStore } from './syncStore'
 export {
   Store,
   SyncStore,
+  Options,
 }
 
 export function createStore<T extends Record<string, any> = Record<string, any>>(options: Options<T>) {
