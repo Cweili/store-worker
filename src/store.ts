@@ -17,15 +17,15 @@ export interface Options<T> extends Omit<
 export class Store<T extends Record<string, any> = Record<string, any>> {
   protected options: Options<T>
 
+  protected worker?: Worker
+
   protected storeMap?: Map<keyof T, T[keyof T]>
 
-  protected storeObj = {} as T
+  private storeObj = {} as T
 
-  protected version = 0
+  private version = 0
 
-  protected storeObjVersion = -1
-
-  protected worker?: Worker
+  private storeObjVersion = -1
 
   private calls = new Map<number, Resolver[]>()
 
